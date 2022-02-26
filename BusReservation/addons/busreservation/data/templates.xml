@@ -1,0 +1,308 @@
+<odoo>
+    <template id="template_buses">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <h3>Reservations</h3>
+                    <br/>
+                    <a t-attf-href="/reservation/create" class="btn btn-info">Reserve</a>
+                    <table border="2" width="100%" class="table-striped table">
+                        <thead>
+                            <td width="20%">Name</td>
+                            <td width="20%">Contact</td>
+                            <td width="20%">From</td>
+                            <td width="20%">To</td>
+                            <td width="20%">No of Tickets</td>
+                            <td width="20%">Total</td>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="passenger_data" t-as="data">
+<!--                                Here template_buses is This template name-->
+                                <tr>
+                                    <td><t t-esc="data['name']"/></td>
+                                    <td><t t-esc="data['contact']"/></td>
+                                    <td><t t-esc="data['from']"/></td>
+                                    <td><t t-esc="data['to']"/></td>
+                                    <td><t t-esc="data['tickets_no']"/></td>
+                                    <td><t t-esc="data['total']"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="template_bus">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <h3>Buses Available</h3>
+                    <br/>
+                    <a t-attf-href="/reservation/create" class="btn btn-info">Reserve</a>
+                    <table border="2" width="100%" class="table-striped table">
+                        <thead>
+                            <td width="20%">Code</td>
+                            <td width="20%">Name</td>
+<!--                            <td width="20%">Total Seats</td>-->
+<!--                            <td width="20%">Seats Booked</td>-->
+                            <td width="20%">From</td>
+                            <td width="20%">To</td>
+                            <td width="20%">Departure Time</td>
+                            <td width="20%">Arrival Time</td>
+                            <td width="20%">Distance</td>
+                            <td width="20%">Fare</td>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="rout_data" t-as="data">
+<!--                                Here template_bus is This template name-->
+                                <tr>
+                                    <td><t t-esc="data['code']"/></td>
+                                    <td><t t-esc="data['name']"/></td>
+<!--                                    <td><t t-esc="data['seats']"/></td>-->
+                                    <td><t t-esc="data['from']"/></td>
+                                    <td><t t-esc="data['to']"/></td>
+                                    <td><t t-esc="data['dep']"/></td>
+                                    <td><t t-esc="data['arr']"/></td>
+                                    <td><t t-esc="data['distance']"/></td>
+                                    <td><t t-esc="data['fare']"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="create_new_reservation" name="Create Reservation">
+        <t t-call="website.layout">
+            <style>
+                .boxed{
+                    width: 700px;
+                    height:30px;
+                    border: 2px solid #5F9EA0;
+                    font-size: 14px;
+                    color: black;
+                    border-radius: 5px;
+                }
+            </style>
+            <div class="oe_structure">
+                <div class="container">
+                    <form id="new_passenger" action="/reservation/save" method="post" data-model_name="reservations.details" class="s_website_form container-fluid mt32" enctype="multipart/form-data" data-success_page="/contactus-thank-you">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <center><h3>Reservation Details</h3></center>
+                        <div>
+                            <center><h3>Passenger Details</h3></center>
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Name">Your Name</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="name" required="1"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Contact">contact</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="contact" required="1"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Email">Email</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>
+                            </div>
+                        </div>
+
+<!--                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">-->
+<!--                            <div class="col-lg-3 col-md-4">-->
+<!--                                <label class="col-form-label" for="Gender">Gender</label>-->
+<!--                            </div>-->
+<!--                            <div class="col-lg-7 col-md-8">-->
+<!--                                <select required="1" name="gender" class="boxed">-->
+<!--                                    <t t-->
+<!--                                </select>-->
+<!--                                <input type="text" class="form-control o_website_form_input" name="contact" required="1"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Country">Country</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select required="1" name="country_id" class="boxed">
+                                    <t t-foreach="data[6]" t-as="rec">
+                                        <option value="rec['id']"><t t-esc="rec['name']"/> </option>
+                                    </t>
+                                </select>
+<!--                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>-->
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="State">State</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select required="1" name="state_id" class="boxed">
+                                    <t t-foreach="data[5]" t-as="rec">
+                                        <option value="rec['id']"><t t-esc="rec['name']"/> </option>
+                                    </t>
+                                </select>
+<!--                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Door no">Door no</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="door_no" required="1"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Street">Street</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="street" required="1"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="City">City</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="text" class="form-control o_website_form_input" name="city" required="1"/>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div>
+                        <center><h3>Travelling Details</h3></center>
+                        <separator orientation="vertical" />
+                        <br/>
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="From">From</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select required="1" name="from_id" class="boxed">
+                                    <t t-foreach="data[1]" t-as="rec">
+                                        <option value="rec['id']"><t t-esc="rec['name']"/> </option>
+                                    </t>
+                                </select>
+<!--                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="To">To</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select required="1" name="to_id" class="boxed">
+                                    <t t-foreach="data[1]" t-as="rec">
+                                        <option value="rec['id']"><t t-esc="rec['name']"/> </option>
+                                    </t>
+                                </select>
+<!--                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Route">Route</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select required="1" name="route_id" class="boxed">
+                                    <t t-foreach="data[7]" t-as="rec">
+                                        <option value="rec['id']"><t t-esc="rec['code']"/> </option>
+                                    </t>
+                                </select>
+<!--                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>-->
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Boarding Point">Boarding Point</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select required="1" name="board_id" class="boxed">
+                                    <t t-foreach="data[2]" t-as="rec">
+                                        <option value="rec['id']"><t t-esc="rec['name']"/> </option>
+                                    </t>
+                                </select>
+<!--                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>-->
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Drop Point">Drop Point</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <select required="1" name="drop_id" class="boxed">
+                                    <t t-foreach="data[2]" t-as="rec">
+                                        <option value="rec['id']"><t t-esc="rec['name']"/> </option>
+                                    </t>
+                                </select>
+<!--                                <input type="text" class="form-control o_website_form_input" name="mail" required="1"/>-->
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="Date">Date</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="date" class="form-control o_website_form_input" name="dot" required="1"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row form-field o_website_form_custom o_website_form_required_custom">
+                            <div class="col-lg-3 col-md-4">
+                                <label class="col-form-label" for="No of Tickets">No of Tickets</label>
+                            </div>
+                            <div class="col-lg-7 col-md-8">
+                                <input type="integer" class="form-control o_website_form_input" name="tickets_no" required="1"/>
+                            </div>
+                        </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <div class="modal-footer border-0 justify-content-between">
+                                <a t-attf-href="/reservation" class="btn btn-info">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

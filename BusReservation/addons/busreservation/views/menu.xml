@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem id="reservations_menu" name="Bus Reservation" action="reservations_action"/>
+
+        <menuitem id="configurations_menu" name="Configurations" parent="reservations_menu"/>
+
+        <menuitem id="location_main_menu" name="Location" parent="configurations_menu"/>
+        <menuitem id="locations_menu" name="All Locations" action="locations_action" parent="location_main_menu"/>
+        <menuitem id="points_menu" name="Location Points" action="points_action" parent="location_main_menu"/>
+
+        <menuitem id="buses_menu" name="Bus" action="buses_action" parent="configurations_menu"/>
+        <menuitem id="routes_menu" name="Routes" action="routes_action" parent="configurations_menu"/>
+        <menuitem id="manager_menu" name="Manager" action="bus_member_action" parent="configurations_menu"/>
+
+        <menuitem id="pay_menu" name="Payment" sequence="2" action="pay_action" parent="reservations_menu"/>
+
+
+
+<!--        <menuitem id="configu_menu" name="Configuration" parent="bookings_menu" groups="base.group_erp_manager"/>-->
+<!--        <menuitem id="hotel_menu" name="Hotel" sequence="2" parent="configu_menu" action="hotel_details_action"/>-->
+<!--        <menuitem id="staff_menu" name="Staff" sequence="4" parent="configu_menu" action="staff_details_action"/>-->
+<!--        <menuitem id="customer_menu" name="Customer" sequence="5" parent="configu_menu" action="customer_details_action"/>-->
+
+<!--        <menuitem id="category_menu" name="Rooms" sequence="4" parent="bookings_menu" action="category_details_action"/>-->
+<!--        <menuitem id="payment_menu" name="Payment" sequence="6" parent="bookings_menu" action="payment_details_action"/>-->
+    </data>
+</odoo>

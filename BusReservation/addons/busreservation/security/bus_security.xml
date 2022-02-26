@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="module_category_tools">
+            <field name="name">reservations.details.sequence</field>
+            <field name="sequence">5</field>
+        </record>
+
+        <record id="module_category_bus_role" model="ir.module.category">
+            <field name="name">Bus Reservation System Main Roles</field>
+            <field name="description">Help to manage Bus Reservation</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="bus_passenger_role" model="res.groups">
+            <field name="name">Passenger</field>
+            <field name="category_id" ref="module_category_bus_role"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="bus_managers_role" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_bus_role"/>
+            <field name="implied_ids" eval="[(4, ref('bus_passenger_role'))]"/>
+        </record>
+
+        <!--        Admin Rule-->
+        <record id="bus_reservation_admin_rule" model="ir.rule">
+            <field name="name">Reservation - Admin</field>
+            <field name="model_id" ref="model_reservations_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_erp_manager'))]"></field>
+        </record>
+
+         <record id="bus_location_admin_rule" model="ir.rule">
+            <field name="name">Location - Admin</field>
+            <field name="model_id" ref="model_location_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_erp_manager'))]"></field>
+        </record>
+
+
+        <record id="bus_points_admin_rule" model="ir.rule">
+            <field name="name"> Points - Admin</field>
+            <field name="model_id" ref="model_points_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_erp_manager'))]"></field>
+        </record>
+
+        <record id="bus_buses_admin_rule" model="ir.rule">
+            <field name="name">Bus - Admin</field>
+            <field name="model_id" ref="model_buses_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_erp_manager'))]"></field>
+        </record>
+
+        <record id="bus_routes_admin_rule" model="ir.rule">
+            <field name="name">Routes - Admin</field>
+            <field name="model_id" ref="model_routes_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_erp_manager'))]"></field>
+        </record>
+
+        <record id="bus_payment_admin_rule" model="ir.rule">
+            <field name="name">Payment - Admin</field>
+            <field name="model_id" ref="model_pay_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_erp_manager'))]"></field>
+        </record>
+
+        <record id="bus_member_admin_rule" model="ir.rule">
+            <field name="name">Member - Admin</field>
+            <field name="model_id" ref="model_member_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('base.group_erp_manager'))]"></field>
+        </record>
+
+<!--            Manager Rule-->
+         <record id="bus_reservation_manager_rule" model="ir.rule">
+            <field name="name">Reservation - Manager</field>
+            <field name="model_id" ref="model_reservations_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('bus_managers_role'))]"></field>
+        </record>
+
+         <record id="bus_location_manager_rule" model="ir.rule">
+            <field name="name">Location - Manager</field>
+            <field name="model_id" ref="model_location_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('bus_managers_role'))]"></field>
+        </record>
+
+
+        <record id="bus_points_manager_rule" model="ir.rule">
+            <field name="name">Points - Manager</field>
+            <field name="model_id" ref="model_points_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('bus_managers_role'))]"></field>
+        </record>
+
+        <record id="bus_buses_manager_rule" model="ir.rule">
+            <field name="name">Buses - Manager</field>
+            <field name="model_id" ref="model_buses_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('bus_managers_role'))]"></field>
+        </record>
+
+        <record id="bus_routes_manager_rule" model="ir.rule">
+            <field name="name">Routes - Manager</field>
+            <field name="model_id" ref="model_routes_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('bus_managers_role'))]"></field>
+        </record>
+
+        <record id="bus_payment_manager_rule" model="ir.rule">
+            <field name="name">Payment - Manager</field>
+            <field name="model_id" ref="model_pay_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('bus_managers_role'))]"></field>
+        </record>
+
+        <record id="bus_member_manager_rule" model="ir.rule">
+            <field name="name">Member - Manager</field>
+            <field name="model_id" ref="model_member_details"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4,ref('bus_managers_role'))]"></field>
+        </record>
+
+
+
+
+
+        <!--        Customers own Rule-->
+
+
+    </data>
+</odoo>

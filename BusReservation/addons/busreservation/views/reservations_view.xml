@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+        <record id="reservations_form" model="ir.ui.view">
+            <field name="name">reservations.details.form</field>
+            <field name="model">reservations.details</field>
+            <field name="arch" type="xml">
+                <form>
+<!--                    fa-print, fa-rupee, fa-map-marker, fa-book-->
+                     <header>
+                         <button name="action_draft" type="object"
+                                string="Set Draft" class="oe_highlight"
+                                attrs="{'invisible':[('status','in',['draft'])]}"/>
+
+                         <button name="action_confirm" type="object"
+                                string="Set Confirmed" class="oe_highlight"
+                                attrs="{'invisible':[('status','in',['confirm', 'cancel'])]}"/>
+
+                         <button name="action_cancel" type="object"
+                                string="Set Cancel" class="oe_highlight"
+                                attrs="{'invisible':[('status','in',['cancel'])]}"/>
+
+                         <button name="action_done" type="object"
+                                string="Set Done" class="oe_highlight"
+                                attrs="{'invisible':[('status','in',['done'])]}"/>
+
+                         <field name="status" widget="statusbar" statusbar_visible="draft, confirm, cancel, done"></field>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+<!--                            <button string="Trains Available" name="wi_button" type="object" class="oe_state_button" icon="fa-pencil-square-o"/>-->
+                            <button string="Print Invoice" name="%(reservation_invoice)d" type="action" class="oe_state_button" icon="fa-print"/>
+                            <button string="Click to Pay" name="%(pay_action)d" type="action" class="oe_state_button" icon="fa-rupee" context="{'default_name_id': active_id}"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name_seq" readonly="True"></field>
+                            </h1>
+                        </div>
+                        <center>
+                       <table cellspacing="35">
+                           <tr>
+                               <th><i><u><h2>From</h2></u></i></th>
+                               <th><i><u><h2>To</h2></u></i></th>
+                               <th><i><u><h2>Date</h2></u></i></th>
+                           </tr>
+                           <tr>
+                               <td><center><h4> <field name="from_id"  options="{'no_create':true,'no_open':true}"/></h4></center></td>
+                               <td><center><h4> <field name="to_id"  options="{'no_create':true,'no_open':true}"/></h4></center></td>
+                               <td><center><h4><field name="dot"/></h4></center></td>
+                           </tr>
+                           <tr>
+                               <th><i><u><h2>Available Buses</h2></u></i></th>
+                               <th><i><u><h2>No of Tickets</h2></u></i></th>
+                               <th><i><u><h2>Total</h2></u></i></th>
+                           </tr>
+                           <tr>
+                               <td>
+                                   <h4><field name="route_id"  options="{'no_create':true,'no_open':true}" domain="[('from_id','=',from_id)], [('to_id', '=', to_id)], [('departure_time', '=', dot.date)]"></field></h4>
+                               </td>
+                               <td><h4><field name="tickets_no"/></h4></td>
+                               <td rowspan="3"><h1><field name="total" readonly="True"/></h1></td>
+                           </tr>
+                           <tr>
+                               <th><i><u><h2>Boarding Point</h2></u></i></th>
+                               <th><i><u><h2>Drop Point</h2></u></i></th>
+                           </tr>
+                           <tr>
+                               <td><h4><field name="board_id"  options="{'no_create':true,'no_open':true}" domain="[('locations_id','=',from_id)]"/></h4></td>
+                               <td><h4><field name="drop_id"  options="{'no_create':true,'no_open':true}"  domain="[('locations_id','=',to_id)]"/></h4></td>
+                           </tr>
+                       </table>
+                        </center>
+
+<!--                        <group>-->
+<!--                            <group string="Payment Details">-->
+<!--                                <field name="payment_id" domain="[('name_id','=',name)]"/>-->
+<!--                                <field name="status_id"/>-->
+<!--                           </group>-->
+<!--                        </group>-->
+                        <notebook>
+                            <page string="Passenger Details">
+                                <group>                                                                    <field name="currency_id" invisible="True"/>
+                                <field name="name" placeholder="Name"/>
+                                    <separator orientation="vertical" />
+                                <field name="contact" placeholder="Contact"/>
+                                <field name="mail" placeholder="Email"/>
+                                <field name="gender"  widget="radio" options="{'horizontal':true}"/>
+                                <field name="dob"/>
+                                <field name="blood_group"/>
+                                <field name="country_id"  options="{'no_create':true,'no_open':true}"/>
+                                <field name="state_id"  options="{'no_create':true,'no_open':true}" domain="[('country_id','=',country_id)]"/>
+                                <field name="door_no"/>
+                                <field name="street"/>
+                                <field name="city"/>
+                                </group>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_reservations_kanban" model="ir.ui.view">
+            <field name="name">passenger.reservations.details.kanban</field>
+            <field name="model">reservations.details</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <kanban class="o_hr_employee_kanban">
+                    <field name="id" />
+<!--                    <field name="profile" />-->
+                    <field name="name"/>
+                    <field name="mail"/>
+                    <field name="contact"/>
+                    <field name="status"/>
+                    <field name="route_id"/>
+                     <templates>
+                       <t t-name="kanban-box">
+                       <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+<!--                           <t t-if="record.profile.raw_value">-->
+<!--									<div-->
+<!--										class="o_kanban_image_fill_left o_kanban_image_full o_image_64_contain"-->
+<!--										t-attf-style="background-image: url(#{kanban_image('passenger.details', 'profile', record.id.raw_value, placeholder)})"-->
+<!--										role="img" />-->
+<!--                           </t>-->
+                            <div class="oe_kanban_details">
+                               <div class="o_kanban_record_top">
+                                   <div class="o_kanban_record_headings">
+                                       <strong class="o_kanban_record_title">
+<!--                                            <div class="float-right" t-if="record.status.raw_value == 'confirm'">-->
+<!--                                                <span class="fa fa-circle text-success" role="img" aria-label="Confirm" title="Confirm" name="presence_confirmed"></span>-->
+<!--                                            </div>-->
+<!--                                            <div class="float-right" t-if="record.status.raw_value == 'draft'">-->
+<!--                                                <span class="fa fa-circle text-danger" role="img" aria-label="Draft" title="Not Confirmed" name="presence_not_confirmed"></span>-->
+<!--                                            </div>-->
+<!--                                           <div class="float-right" t-if="record.status.raw_value == 'cancel'">-->
+<!--                                                <span class="fa fa-circle text-danger" role="img" aria-label="Cancel" title="Cancelled" name="presence_not_confirmed"></span>-->
+<!--                                            </div>-->
+<!--                                            <div class="float-right" t-if="record.status.raw_value == 'done'">-->
+<!--                                                <span class="fa fa-circle text-warning" role="img" aria-label="Completed" title="Done" name="presence_completed"></span>-->
+<!--                                            </div>-->
+                                           <field name="name" placeholder="Employee's Name"/>
+                                       </strong>
+                                        <span t-if="record.train_id.raw_value" class="o_kanban_record_subtitle"><field name="route_id"/></span>
+                                   </div>
+                               </div>
+                                 <ul>
+<!--                                   <li id="last_login"/>-->
+                                   <li t-if="record.mail.raw_value" class="o_text_overflow"><field name="mail" /></li>
+                                   <li t-if="record.mob.raw_value" class="o_force_ltr"><field name="contact" /></li>
+                               </ul>
+                           </div>
+                       </div>
+                       </t>
+                   </templates>
+               </kanban>
+            </field>
+        </record>
+
+        <record id="view_bus_reservation_search" model="ir.ui.view">
+            <field name="name">reservations.details.search</field>
+            <field name="model">reservations.details</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"></field>
+                    <field name="contact"></field>
+                    <field name="mail"></field>
+                    <field name="from_id"></field>
+                    <field name="to_id"></field>
+                    <field name="gender"></field>
+                    <filter name="gender" string="Male" domain="[('gender','=','male')]"></filter>
+                    <filter name="gender" string="Female" domain="[('gender','=','female')]"></filter>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Country" name="country_id" context="{'group_by':'country_id'}"/>
+                        <filter string="State" name="state_id" context="{'group_by':'state_id'}"/>
+                        <filter string="From" name="fro" context="{'group_by':'from_id'}"/>
+                        <filter string="To" name="to" context="{'group_by':'to_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="reservations_tree" model="ir.ui.view">
+            <field name="name">reservations.details.tree</field>
+            <field name="model">reservations.details</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name_seq"></field>
+                    <field name="name"></field>
+                    <field name="contact"></field>
+                    <field name="from_id"></field>
+                    <field name="to_id"></field>
+                    <field name="tickets_no"></field>
+                    <field name="total"></field>
+                    <field name="status"></field>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="reservations_action" model="ir.actions.act_window">
+            <field name="name">Reservations Details</field>
+            <field name="res_model">reservations.details</field>
+            <field name="view_mode">tree,form,kanban,search</field>
+            <field name="help" type="html">
+                <p class="oe_view_noncontent_create">
+                    Click to Create to Reserve
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

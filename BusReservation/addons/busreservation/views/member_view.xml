@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+        <record id="bus_member_form" model="ir.ui.view">
+            <field name="name">member.details.form</field>
+            <field name="model">member.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group string="Manager Details">
+                                <field name="name" placeholder="Name"/>
+                                <field name="contact" placeholder="Contact"/>
+                                <field name="mail" placeholder="Email"/>
+                                <field name="gender"  widget="radio" options="{'horizontal':true}"/>
+                                <field name="dob"/>
+                                <field name="role"/>
+                                <field name="country_id"  options="{'no_create':true,'no_open':true}"/>
+                                <field name="state_id"  options="{'no_create':true,'no_open':true}" domain="[('country_id','=',country_id)]"/>
+                                <field name="door_no"/>
+                                <field name="street"/>
+                                <field name="city"/>
+                           </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="bus_member_tree" model="ir.ui.view">
+            <field name="name">member.details.tree</field>
+            <field name="model">member.details</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"></field>
+                    <field name="contact"></field>
+                    <field name="mail"></field>
+                    <field name="gender"></field>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="bus_member_action" model="ir.actions.act_window">
+            <field name="name">Manager Details</field>
+            <field name="res_model">member.details</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_noncontent_create">
+                    Click to Create to Add Manager
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

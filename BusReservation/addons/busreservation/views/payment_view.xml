@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+        <record id="pay_form" model="ir.ui.view">
+            <field name="name">pay.details.form</field>
+            <field name="model">pay.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+<!--                        <header>-->
+<!--                            <button name="action_paid" type="object"-->
+<!--                                    string="Click to Paid" class="oe_highlight"-->
+<!--                                    attrs="{'invisible':[('status','in',['paid'])]}"/>-->
+
+<!--                            <button name="action_not_paid" type="object"-->
+<!--                                string="Set Not Paid" class="oe_highlight"-->
+<!--                                attrs="{'invisible':[('status','in',['not_paid'])]}"/>-->
+
+<!--                            <field name="status" widget="statusbar" statusbar_visible="not_paid, paid"></field>-->
+<!--                        </header>-->
+
+                        <group>
+                           <group string="Payment Details">
+<!--                               <h1><field name="name_seq_id"/></h1>-->
+                               <field name="name_id" placeholder="Name"/>
+                               <field name="currency_id" invisible="True"/>
+                               <field name="tickets_no"/>
+                               <h1><field name="total"/></h1>
+                           </group>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="pay_tree" model="ir.ui.view">
+            <field name="name">pay.details.tree</field>
+            <field name="model">pay.details</field>
+            <field name="arch" type="xml">
+                <tree>
+<!--                    <field name="name_seq_id"/>-->
+                    <field name="name_id"></field>
+<!--                    <field name="status"></field>-->
+                    <field name="total"></field>
+                </tree>
+            </field>
+        </record>
+
+<!--        <record id="view_payment_reservation_pivot" model="ir.ui.view">-->
+<!--            <field name="name">pay.details.pivot</field>-->
+<!--            <field name="model">pay.details</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <pivot string="Payment Statistics">-->
+<!--                    <field name="tickets_no" type="row"></field>-->
+<!--                    <field name="total" type="col"></field>-->
+<!--&lt;!&ndash;                    <field name="departure_time" type="col" interval="month"></field>&ndash;&gt;-->
+<!--                </pivot>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="view_pay_reservation_graph" model="ir.ui.view">-->
+<!--            <field name="name">pay.details.graph</field>-->
+<!--            <field name="model">pay.details</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <graph string="Payment Statistics">-->
+
+<!--                    <field name="tickets_no"></field>-->
+<!--                    <field name="total"></field>-->
+<!--                </graph>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+        <record id="pay_action" model="ir.actions.act_window">
+            <field name="name">Payment Details</field>
+            <field name="res_model">pay.details</field>
+            <field name="view_mode">tree,form</field>
+<!--            <field name="target">new</field>-->
+            <field name="help" type="html">
+                <p class="oe_view_noncontent_create">
+                    Click to Create to Add Payments
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

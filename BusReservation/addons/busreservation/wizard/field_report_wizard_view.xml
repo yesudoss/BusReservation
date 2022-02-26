@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="fields_wizard_form" model="ir.ui.view">
+            <field name="name">Fields Wizard</field>
+            <field name="model">field.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="gender"/>
+                                <field name="route_id"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button string="Print" name="field_wizard_report" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="field_wizard_action" model="ir.actions.act_window">
+            <field name="name">Field Wizard</field>
+            <field name="res_model">field.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="fields_wizard_main_menu" name="Report" parent="reservations_menu"/>
+        <menuitem id="fields_wizard_menu" name="Passenger Field Report" parent="fields_wizard_main_menu" action="field_wizard_action"/>
+    </data>
+</odoo>

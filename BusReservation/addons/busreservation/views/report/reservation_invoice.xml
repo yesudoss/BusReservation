@@ -1,0 +1,371 @@
+<odoo>
+    <data>
+        <!--Student Report -->
+        <report id="reservation_invoice"
+                model="reservations.details"
+                string="Reservation Invoice"
+                report_type="qweb-html"
+
+                name="busreservation.invoice_template"
+                file="busreservation.invoice_template">
+        </report>
+<!--        Here busreservation.invoice_template ... busreservation is addons name-->
+
+
+        <report id="busreservation.passengers_field_report"
+                model="reservations.details"
+                string="Field Report"
+                report_type="qweb-html"
+                name="busreservation.passengers_field_template"
+                file="busreservation.passengers_field_template"
+                print_report_name='"Field Report"'
+                multi="False"
+                menu="False">
+        </report>
+    </data>
+
+    <template id="passengers_field_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+<!--                    <center><h5><t t-esc="data['gender']"/><![CDATA|&nbsp;|]>Passengers</h5></center>-->
+                    <center><h5><t t-esc="data['gender']"/><![CDATA[&nbsp;]]>Passengers</h5></center>
+                    <br/><br/>
+                    <table class="table table-bordered" border="2">
+                        <t t-set="s_no" t-value="1"/>
+                        <thead>
+                            <tr>
+                                <td>S.No</td>
+                                <td>Name</td>
+                                <td>Mobile</td>
+                                <td>From</td>
+                                <td>To</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="get_data" t-as="datum">
+                                <tr>
+                                    <td t-esc="s_no"/>
+                                    <td t-esc="datum['name']"/>
+                                    <td t-esc="datum['contact']"/>
+                                    <td t-esc="datum['from_id'].name"/>
+                                    <td t-esc="datum['to_id'].name"/>
+                                </tr>
+                                <t t-set="s_no" t-value="s_no+1"/>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="invoice_template">
+        <head>
+            <style>
+                .invoice-box {
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 30px;
+                    border: 1px solid #eee;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+                    font-size: 16px;
+                    line-height: 24px;
+                    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                    color: #555;
+                }
+
+                .invoice-box table {
+                    width: 100%;
+                    line-height: inherit;
+                    text-align: left;
+                }
+
+                .invoice-box table td {
+                    padding: 5px;
+                    vertical-align: top;
+                }
+
+                .invoice-box table tr td:nth-child(2) {
+                    text-align: right;
+                }
+
+                .invoice-box table tr.top table td {
+                    padding-bottom: 20px;
+                }
+
+                .invoice-box table tr.top table td.title {
+                    font-size: 45px;
+                    line-height: 45px;
+                    color: #333;
+                }
+
+                .invoice-box table tr.information table td {
+                    padding-bottom: 40px;
+                }
+
+                .invoice-box table tr.heading td {
+                    background: #eee;
+                    border-bottom: 1px solid #ddd;
+                    font-weight: bold;
+                }
+
+
+                .invoice-box table tr.details td {
+                    padding-bottom: 20px;
+                }
+
+                .invoice-box table tr.item td{
+                    border-bottom: 1px solid #eee;
+                }
+
+                .invoice-box table tr.item.last td {
+                    border-bottom: none;
+                }
+
+                .invoice-box table tr.total td:nth-child(2) {
+                    border-top: 2px solid #eee;
+                    font-weight: bold;
+                }
+
+                @media only screen and (max-width: 600px) {
+                    .invoice-box table tr.top table td {
+                        width: 100%;
+                        display: block;
+                        text-align: center;
+                    }
+
+                    .invoice-box table tr.information table td {
+                        width: 100%;
+                        display: block;
+                        text-align: center;
+                    }
+                }
+                /** RTL **/
+                .rtl {
+                    direction: rtl;
+                    font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                }
+
+                .rtl table {
+                    text-align: right;
+                }
+
+                .rtl table tr td:nth-child(2) {
+                    text-align: left;
+                }
+            </style>
+        </head>
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div>
+                            <table class="table table-sm table-header">
+
+                            </table>
+                            <hr size="3" color="green"></hr>
+                        </div>
+                        <div class="invoice-box">
+                            <h1><center><b><i><u>Blue Bus</u></i></b></center></h1>
+                            <table cellpadding="0" cellspacing="0">
+                                <tr class="top">
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td class="title">
+                                                    <h1><t t-esc="o.name_seq" /></h1>
+
+                                                    <img src="F:\Jerry\TechTalkPython\Project\BusReservation\Images\img.jpg" style="width:100%; max-width:300px;"/><br/>
+<!--                                                    <img src="https://photos.google.com/photo/AF1QipMX-dmUWHAg3BCAr6IwF0pERMBHnXxgSVbHhpWZ" style="width:100%; max-width:300px;"/>-->
+<!--                                                    <img src="https://www.sparksuite.com/images/logo.png" style="width:100%; max-width:300px;"/>-->
+                                                </td>
+                                                <td>
+                                                    <h1>Ticket #</h1><br/>
+                                                    <br/>
+                                                    Due: February 1, 2015
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr class="information">
+                                    <td colspan="2">
+                                        <center>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        Name of the Passenger<br/>
+                                                        Contact<br/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="o.name" /><br/>
+                                                        <t t-esc="o.contact" /><br/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        From<br/>
+                                                        To<br/>
+                                                        Boarding Point<br/>
+                                                        Drop Point<br/>
+                                                        Date of Travelling<br/>
+                                                        Bus Name<br/>
+                                                        Bus Number<br/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="o.from_id.name" /><br/>
+                                                        <t t-esc="o.to_id.name" /><br/>
+                                                        <t t-esc="o.board_id.name" /><br/>
+                                                        <t t-esc="o.drop_id.name" /><br/>
+                                                        <t t-esc="o.dot" /><br/>
+                                                        <t t-esc="o.route_id.bus_id.name" /><br/>
+                                                        <t t-esc="o.route_id.bus_id.number" /><br/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </center>
+
+                                    </td>
+                                </tr>
+                                <tr class="heading">
+                                    <td>
+                                        Payment Method
+                                    </td>
+                                    <td>
+                                        Online Payment(Only) #
+                                    </td>
+                                </tr>
+                                <tr class="details">
+                                    <td>
+                                        Online Transaction only allowed
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h1>Status</h1></td>
+                                    <td><h1><t t-esc="o.status"/></h1><br/></td>
+                                </tr>
+                                <tr class="heading">
+                                    <td>
+                                        No of Tickets
+                                    </td>
+                                    <td>
+                                        Price
+                                    </td>
+                                </tr>
+                                <tr class="heading">
+                                    <td>
+                                        <t t-esc="o.tickets_no" /><br/>
+                                    </td>
+                                    <td>
+                                        ₹
+                                        <t t-esc="o.route_id.fare" /><br/>
+                                    </td>
+                                </tr>
+
+<!--                                <tr class="item last">-->
+<!--                                    <td>-->
+<!--                                        Domain name (1 year)-->
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                        $10.00-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+                                <tr>
+                                    <td>
+                                        <h1>Total:</h1>
+
+                                    </td>
+                                    <td>
+                                      <h1>
+                                        ₹
+                                        <t t-esc="o.total" />
+                                      </h1>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+
+
+
+</odoo>
+
+
+<!--                        <div id="passenger">-->
+<!--                            <b>Passenger Details</b>-->
+<!--                            <table class="table table-sm table-bordered">-->
+<!--                                <tr>-->
+<!--                                    <th style="width: 220px;">Name</th>-->
+<!--                                    <td style="width: 220px;">-->
+<!--                                        <t t-esc="o.name" />-->
+<!--                                    </td>-->
+<!--                                    <th>Mobile No</th>-->
+<!--                                    <td>-->
+<!--                                        <t t-esc="o.mob" />-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <th>Gender</th>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="o.gender" />-->
+<!--                                    </td>-->
+<!--&lt;!&ndash;                                    <th>DOB</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <td>&ndash;&gt;-->
+<!--&lt;!&ndash;                                        <span t-field="o.dob" t-options='{"format":"dd-MM-yyyy"}' />&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </td>&ndash;&gt;-->
+<!--                                    <th>Mail</th>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="o.mail"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <th>From</th>-->
+<!--                                    <td>-->
+<!--                                        <t t-esc="o.fro"/>-->
+<!--                                    </td>-->
+<!--                                    <th>To</th>-->
+<!--                                    <td>-->
+<!--                                        <t t-esc="o.to"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <th>Date of Travel</th>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="o.dot" t-options='{"format":"dd-MM-yyyy"}' />-->
+<!--                                    </td>-->
+<!--                                    <th>Berth Type</th>-->
+<!--                                    <td>-->
+<!--                                        <span t-field="o.berth" />-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <th>Class</th>-->
+<!--                                    <td>-->
+<!--                                        <t t-esc="o.classing_id.class_name"/>-->
+<!--                                    </td>-->
+<!--                                    <th>Train</th>-->
+<!--                                    <td>-->
+<!--                                        <t t-esc="o.train_id.train_name"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </t>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+
+<!--</odoo>-->

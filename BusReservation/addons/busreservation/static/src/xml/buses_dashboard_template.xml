@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template id="bus_reservations_template" xml:space="preserve">
+    <t t-name="BusClientAction" style="background-color:green">
+        <body style="background-color:green">
+            <div class="oh_dashboards">
+                <div class="o_dashboard">
+                    <center><h1 style="color:red;">Bus Reservation System</h1></center>
+                    <br/>
+                    <marquee><h3>Bus Reservation</h3></marquee>
+<!--                    <table border="2" class="table table-striped">-->
+<!--                        <thead>-->
+<!--                            <th>Name</th>-->
+<!--                            <th>Mobile</th>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                            <t t-foreach="widget.data" t-as="data">-->
+<!--                                <tr>-->
+<!--                                    <td><t t-esc="data['name']"/></td>-->
+<!--                                    <td><t t-esc="data['contact']"/></td>-->
+<!--                                </tr>-->
+<!--                            </t>-->
+<!--                         </tbody>-->
+<!--                    </table>-->
+
+                    <center><h1><i>Routes and Bus Details</i></h1></center>
+                    <table border="2" class="table table-striped">
+                        <thead>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Bus</th>
+                            <th>Fare</th>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="widget.data" t-as="data">
+                                <tr>
+                                    <td><t t-esc="data['from_id']"/></td>
+                                    <td><t t-esc="data['to_id']"/></td>
+                                    <td><t t-esc="data['bus_id']"/></td>
+                                    <td><t t-esc="data['fare']"/></td>
+                                </tr>
+                            </t>
+                         </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </body>
+    </t>
+</template>

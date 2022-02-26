@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+        <record id="routes_form" model="ir.ui.view">
+            <field name="name">routes.details.form</field>
+            <field name="model">routes.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                           <group string="Route Details">
+                               <field name="code" placeholder="Code"/>
+                               <field name="bus_id"  options="{'no_create':true,'no_open':true}"/>
+                               <field name="seats"/>
+                               <field name="count"/>
+<!--                               <field name="bal"/>-->
+                               <field name="from_id"  options="{'no_create':true,'no_open':true}"/>
+                               <field name="to_id"  options="{'no_create':true,'no_open':true}"/>
+                               <field name="departure_time"/>
+                               <field name="arrival_time"/>
+                               <field name="distance"/>
+                               <field name="currency_id"  invisible="True"></field>
+                               <field name="fare"/>
+                               <field name="description"/>
+                           </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_bus_reservation_pivot" model="ir.ui.view">
+            <field name="name">routes.details.pivot</field>
+            <field name="model">routes.details</field>
+            <field name="arch" type="xml">
+                <pivot string="Routes Statistics">
+                    <field name="from_id" type="row"></field>
+                    <field name="to_id" type="col"></field>
+                    <field name="departure_time" type="col" interval="month"></field>
+                </pivot>
+            </field>
+        </record>
+
+
+
+
+
+        <record id="view_bus_reservation_graph" model="ir.ui.view">
+            <field name="name">routes.details.graph</field>
+            <field name="model">routes.details</field>
+            <field name="arch" type="xml">
+                <graph string="Passenger Statistics">
+                    <field name="bus_id"></field>
+<!--                    <field name="gender"></field>-->
+                </graph>
+            </field>
+        </record>
+
+        <record id="routes_tree" model="ir.ui.view">
+            <field name="name">routes.details.tree</field>
+            <field name="model">routes.details</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"></field>
+                    <field name="bus_id"></field>
+                    <field name="from_id"></field>
+                    <field name="to_id"></field>
+                    <field name="departure_time"></field>
+                    <field name="arrival_time"></field>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="routes_action" model="ir.actions.act_window">
+            <field name="name">Route Details</field>
+            <field name="res_model">routes.details</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="help" type="html">
+                <p class="oe_view_noncontent_create">
+                    Click to Create to Add Routes
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

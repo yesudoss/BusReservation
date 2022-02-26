@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_routes_wizard" model="ir.ui.view">
+        <field name="name">rout.wizard</field>
+        <field name="model">rout.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Route Details">
+                <group>
+                    <group>
+                        <field name="route_id"></field>
+                        <field name="code"></field>
+                        <field name="bus_id"></field>
+                        <field name="from_id"></field>
+                        <field name="to_id"></field>
+<!--                        <field name="departure_time"></field>-->
+<!--                        <field name="arrival_time"></field>-->
+                        <field name="distance"></field>
+                        <field name="currency_id" invisible="True"></field>
+                        <field name="fare"></field>
+                    </group>
+<!--                    <field name="description"></field>-->
+                </group>
+                <footer>
+                    <button string="Update Route Details" name="update_route" type="object" class="btn-primary"/>
+                    <button string="Create Route" name="create_route" type="object" class="btn-primary"/>
+                    <button string="Cancel" clas="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+
+    </record>
+
+     <record id="routes_wizard_details_action" model="ir.actions.act_window">
+            <field name="name">Routes Details</field>
+            <field name="res_model">rout.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem id="menu_wizard" name="Wizard" sequence="3" parent="reservations_menu"/>
+        <menuitem id="routes_wizard_menu" name="Route Details" parent="menu_wizard" action="routes_wizard_details_action"/>
+</odoo>
